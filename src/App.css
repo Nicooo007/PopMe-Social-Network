@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @custom-variant dark (&:where(.dark, .dark *));
-=======
-@import "tailwindcss";
->>>>>>> 922f5dc4f9f572b56d6976f15cbb303972715576
