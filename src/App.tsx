@@ -4,6 +4,7 @@ import Post from "./components/Post";
 import Sidebar from "./components/sidebar/sidebar";
 import CollectionsPage from "./pages/Collections";
 import { getPosts } from "./services/api";
+import "./index.css"; // Tailwind global
 
 interface PostData {
   id: number;
@@ -39,14 +40,14 @@ export default function App() {
       setFilteredPosts(data);
     } catch (err) {
       console.error("Error al cargar posts desde API:", err);
-      // Fallback al JSON local si falla la API
+
       fetch("/data/postData.json")
         .then((res) => res.json())
         .then((data) => {
           const postsWithLikes = data.map((post: any) => ({
             ...post,
             likes: post.likes || Math.floor(Math.random() * 200),
-            comments: post.comments || []
+            comments: post.comments || [],
           }));
           setPosts(postsWithLikes);
           setFilteredPosts(postsWithLikes);
@@ -67,12 +68,14 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#1B1B1F] text-white">
+      {/* Sidebar */}
       <Sidebar
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
         onSelectMenu={setActivePage}
       />
 
+      {/* Header */}
       <header className="sticky top-0 z-10 bg-[#26242E] shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-4">
           <div className="flex items-center gap-4 mb-4">
@@ -82,12 +85,15 @@ export default function App() {
             >
               <i className="bx bx-menu text-3xl"></i>
             </button>
+
             <h1 className="text-3xl font-bold text-[#AA0235] flex-1 text-center">
               🎬 PopMe Social Network
             </h1>
+
             <div className="w-8"></div>
           </div>
 
+          {/* Buscadores */}
           {activePage === "Home" && <SearchBar onSearch={handleSearch} />}
 
           {activePage === "Collections" && (
@@ -107,7 +113,9 @@ export default function App() {
         </div>
       </header>
 
+      {/* Main content */}
       <main className="max-w-4xl mx-auto px-6 py-6">
+        {/* Página Home */}
         {activePage === "Home" && (
           <div className="space-y-6">
             {loading ? (
@@ -142,6 +150,7 @@ export default function App() {
           </div>
         )}
 
+        {/* Página Collections */}
         {activePage === "Collections" && (
           <CollectionsPage searchQuery={collectionsSearch} />
         )}
