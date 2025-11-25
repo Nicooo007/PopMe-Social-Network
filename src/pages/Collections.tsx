@@ -133,4 +133,5 @@ export default function CollectionsPage({ searchQuery }: CollectionsPageProps) {
       </div>
     </div>
   );
+  
 }
