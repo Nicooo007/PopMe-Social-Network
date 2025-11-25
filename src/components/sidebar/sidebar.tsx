@@ -1,21 +1,21 @@
-import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./sidebar.css";
 import logo from "../../assets/Popme.png";
 
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
-  onSelectMenu: (menu: string) => void; // 👈 NUEVO prop
 }
 
-const Sidebar = ({ isOpen, onClose, onSelectMenu }: SidebarProps) => {
-  const [activeMenu, setActiveMenu] = useState("Home");
+const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
+  const location = useLocation();
 
-  const handleMenuClick = (menu: string) => {
-    setActiveMenu(menu);
-    onSelectMenu(menu); // 👈 avisamos al padre
-    onClose(); // cierra sidebar al hacer clic
-  };
+  const menuItems = [
+    { path: "/", label: "Home", icon: "bx-home" },
+    { path: "/movies", label: "Movies", icon: "bx-movie" },
+    { path: "/collections", label: "Collections", icon: "bx-heart" },
+    { path: "/profile", label: "Profile", icon: "bx-user" },
+  ];
 
   return (
     <>
@@ -43,34 +43,21 @@ const Sidebar = ({ isOpen, onClose, onSelectMenu }: SidebarProps) => {
 
         <nav className="nav">
           <ul>
-            <li
-              className={activeMenu === "Home" ? "active" : ""}
-              onClick={() => handleMenuClick("Home")}
-            >
-              <i className="bx bx-home"></i>
-              <span>Home</span>
-            </li>
-            <li
-              className={activeMenu === "Movies" ? "active" : ""}
-              onClick={() => handleMenuClick("Movies")}
-            >
-              <i className="bx bx-movie"></i>
-              <span>Movies</span>
-            </li>
-            <li
-              className={activeMenu === "Collections" ? "active" : ""}
-              onClick={() => handleMenuClick("Collections")}
-            >
-              <i className="bx bx-heart"></i>
-              <span>Collections</span>
-            </li>
-            <li
-              className={activeMenu === "Profile" ? "active" : ""}
-              onClick={() => handleMenuClick("Profile")}
-            >
-              <i className="bx bx-user"></i>
-              <span>Profile</span>
-            </li>
+            {menuItems.map((item) => (
+              <li
+                key={item.path}
+                className={location.pathname === item.path ? "active" : ""}
+              >
+                <Link
+                  to={item.path}
+                  onClick={onClose}
+                  style={{ textDecoration: "none", color: "inherit", display: "flex", alignItems: "center", gap: "1rem", width: "100%" }}
+                >
+                  <i className={`bx ${item.icon}`}></i>
+                  <span>{item.label}</span>
+                </Link>
+              </li>
+            ))}
           </ul>
         </nav>
 

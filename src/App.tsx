@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
-import SearchBar from "./components/SearchBar";
-import Post from "./components/Post";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Sidebar from "./components/sidebar/sidebar";
+import { useState } from "react";
+import HomePage from "./pages/HomePage";
 import CollectionsPage from "./pages/Collections";
+<<<<<<< HEAD
+=======
 import { getPosts } from "./services/api";
 import "./index.css"; // Tailwind global
 
@@ -19,11 +21,35 @@ interface PostData {
   likes: number;
   comments: any[];
 }
+>>>>>>> feature/post-interactions
 
 export default function App() {
-  const [posts, setPosts] = useState<PostData[]>([]);
-  const [filteredPosts, setFilteredPosts] = useState<PostData[]>([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+<<<<<<< HEAD
+
+  return (
+    <BrowserRouter>
+      <div className="min-h-screen bg-[#1B1B1F] text-white">
+        <Sidebar
+          isOpen={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+        />
+
+        <header className="sticky top-0 z-10 bg-[#26242E] shadow-lg">
+          <div className="max-w-4xl mx-auto px-6 py-4">
+            <div className="flex items-center gap-4 mb-4">
+              <button
+                onClick={() => setSidebarOpen(true)}
+                className="text-[#AA0235] hover:text-[#FFC267] transition"
+              >
+                <i className="bx bx-menu text-3xl"></i>
+              </button>
+              <h1 className="text-3xl font-bold text-[#AA0235] flex-1 text-center">
+                🎬 PopMe Social Network
+              </h1>
+              <div className="w-8"></div>
+            </div>
+=======
   const [activePage, setActivePage] = useState("Home");
   const [collectionsSearch, setCollectionsSearch] = useState("");
   const [loading, setLoading] = useState(true);
@@ -147,14 +173,27 @@ export default function App() {
                 </p>
               </div>
             )}
+>>>>>>> feature/post-interactions
           </div>
-        )}
+        </header>
 
+<<<<<<< HEAD
+        <main className="max-w-4xl mx-auto px-6 py-6">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/collections" element={<CollectionsPage searchQuery="" />} />
+            {/* Las otras rutas se agregarán cuando estén listas */}
+          </Routes>
+        </main>
+      </div>
+    </BrowserRouter>
+=======
         {/* Página Collections */}
         {activePage === "Collections" && (
           <CollectionsPage searchQuery={collectionsSearch} />
         )}
       </main>
     </div>
+>>>>>>> feature/post-interactions
   );
 }
