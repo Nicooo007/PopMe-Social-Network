@@ -1,11 +1,18 @@
+// src/pages/CreateCollection.tsx
 import { useState } from "react";
+feature/collections
+import { useAppDispatch } from "../store/hooks";
+import { createCollectionAsync } from "../store/slices/collectionsSlice";
+
 import { createCollection } from "../services/api";
+ main
 
 interface CreateCollectionProps {
   onBack: () => void;
 }
 
 export default function CreateCollection({ onBack }: CreateCollectionProps) {
+  const dispatch = useAppDispatch();
   const [collectionName, setCollectionName] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
   const [searchMovie, setSearchMovie] = useState("");
@@ -26,7 +33,6 @@ export default function CreateCollection({ onBack }: CreateCollectionProps) {
     setIsSaving(true);
 
     try {
-      // Imágenes de ejemplo para las películas seleccionadas
       const moviePosters = [
         "https://m.media-amazon.com/images/I/71niXI3lxlL._AC_UF894,1000_QL80_.jpg",
         "https://i.pinimg.com/736x/7c/4a/23/7c4a23a434ef5ff58e9c51e29e4fe909.jpg",
@@ -38,14 +44,22 @@ export default function CreateCollection({ onBack }: CreateCollectionProps) {
 
       const movies = selectedMovies.map(index => moviePosters[index]);
 
+ feature/collections
+      await dispatch(createCollectionAsync({
+
       await createCollection({
+ main
         title: collectionName,
         author: "currentUser",
         moviesCount: movies.length,
         movies,
         isPrivate,
         createdBy: "currentUser"
+ feature/collections
+      })).unwrap();
+
       });
+ main
 
       alert(`✨ Collection "${collectionName}" created successfully!`);
       onBack();
@@ -114,7 +128,7 @@ export default function CreateCollection({ onBack }: CreateCollectionProps) {
 
           <div>
             <h3 className="text-lg font-semibold mb-4 text-white">
-              Add a movie to the collection
+              Add movies to the collection
             </h3>
 
             <div className="grid grid-cols-3 gap-6">
@@ -157,7 +171,7 @@ export default function CreateCollection({ onBack }: CreateCollectionProps) {
                 : "bg-gray-700 text-gray-500 cursor-not-allowed"
             }`}
           >
-            {isSaving ? "Saving..." : "Save"}
+            {isSaving ? "Saving..." : "Save Collection"}
           </button>
         </div>
       </div>
