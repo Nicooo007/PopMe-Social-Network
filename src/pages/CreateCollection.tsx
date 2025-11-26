@@ -1,7 +1,11 @@
 // src/pages/CreateCollection.tsx
 import { useState } from "react";
+feature/collections
 import { useAppDispatch } from "../store/hooks";
 import { createCollectionAsync } from "../store/slices/collectionsSlice";
+
+import { createCollection } from "../services/api";
+ main
 
 interface CreateCollectionProps {
   onBack: () => void;
@@ -40,14 +44,22 @@ export default function CreateCollection({ onBack }: CreateCollectionProps) {
 
       const movies = selectedMovies.map(index => moviePosters[index]);
 
+ feature/collections
       await dispatch(createCollectionAsync({
+
+      await createCollection({
+ main
         title: collectionName,
         author: "currentUser",
         moviesCount: movies.length,
         movies,
         isPrivate,
         createdBy: "currentUser"
+ feature/collections
       })).unwrap();
+
+      });
+ main
 
       alert(`✨ Collection "${collectionName}" created successfully!`);
       onBack();

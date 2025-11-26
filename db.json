@@ -1,0 +1,165 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "userName": "Jane Doe",
+      "userHandle": "@janedoe",
+      "userImage": "",
+      "movieTitle": "Inception",
+      "year": 2010,
+      "reviewText": "Mind-bending masterpiece! The layered storytelling and stunning visuals make this a must-watch.",
+      "rating": 5,
+      "movieImage": "https://i.pinimg.com/1200x/4c/29/d6/4c29d6753e61511d6369567214af2f53.jpg",
+      "likes": 95,
+      "comments": []
+    },
+    {
+      "id": "2",
+      "userName": "John Smith",
+      "userHandle": "@johnsmith",
+      "userImage": "",
+      "movieTitle": "The Shawshank Redemption",
+      "year": 1994,
+      "reviewText": "A timeless tale of hope and friendship. Morgan Freeman and Tim Robbins deliver unforgettable performances.",
+      "rating": 5,
+      "movieImage": "https://i.pinimg.com/736x/b7/95/44/b795447414c34b18eddc91fdea0fffef.jpg",
+      "likes": 256,
+      "comments": []
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "postId": 1,
+      "userName": "Alice Brown",
+      "userHandle": "@aliceb",
+      "text": "Totally agree! One of Nolan's best works.",
+      "createdAt": "2025-01-10T14:30:00.000Z"
+    }
+  ],
+  "collections": [
+    {
+      "id": "1",
+      "title": "All time favorites",
+      "author": "@Ann0",
+      "description": "Classic movies that never get old",
+      "likes": 91,
+      "moviesCount": 3,
+      "isPrivate": false,
+      "createdBy": "currentUser",
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "movies": [
+        "https://m.media-amazon.com/images/I/71niXI3lxlL._AC_UF894,1000_QL80_.jpg",
+        "https://i.pinimg.com/736x/7c/4a/23/7c4a23a434ef5ff58e9c51e29e4fe909.jpg",
+        "https://i.pinimg.com/1200x/4c/29/d6/4c29d6753e61511d6369567214af2f53.jpg"
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Crying certified",
+      "author": "@cruzee",
+      "description": "Movies that will make you emotional",
+      "likes": 587,
+      "moviesCount": 4,
+      "isPrivate": false,
+      "createdBy": "@cruzee",
+      "createdAt": "2025-01-05T00:00:00.000Z",
+      "movies": [
+        "https://i.pinimg.com/736x/b7/95/44/b795447414c34b18eddc91fdea0fffef.jpg",
+        "https://i.pinimg.com/736x/7c/4a/23/7c4a23a434ef5ff58e9c51e29e4fe909.jpg",
+        "https://i.pinimg.com/1200x/3c/28/47/3c284737d4ee8eeb333d885f34f66917.jpg",
+        "https://m.media-amazon.com/images/I/71niXI3lxlL._AC_UF894,1000_QL80_.jpg"
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Terror in the house",
+      "author": "@cokl3",
+      "description": "Spooky movies for a scary night",
+      "likes": 65,
+      "moviesCount": 3,
+      "isPrivate": false,
+      "createdBy": "@cokl3",
+      "createdAt": "2025-01-08T00:00:00.000Z",
+      "movies": [
+        "https://i.pinimg.com/736x/51/26/08/512608d675fd98fca4105f90ab7d6d5c.jpg",
+        "https://i.pinimg.com/736x/61/4e/f2/614ef2b62f2ba21bc75cf0fa7f0c56c5.jpg",
+        "https://i.pinimg.com/1200x/4c/29/d6/4c29d6753e61511d6369567214af2f53.jpg"
+      ]
+    },
+    {
+      "id": "992f",
+      "title": "Hola",
+      "author": "currentUser",
+      "moviesCount": 2,
+      "movies": [
+        "https://m.media-amazon.com/images/I/71niXI3lxlL._AC_UF894,1000_QL80_.jpg",
+        "https://i.pinimg.com/736x/7c/4a/23/7c4a23a434ef5ff58e9c51e29e4fe909.jpg"
+      ],
+      "isPrivate": false,
+      "createdBy": "currentUser",
+      "likes": 3,
+      "createdAt": "2025-11-12T05:36:19.877Z"
+    },
+    {
+      "id": "70b8",
+      "title": "hola",
+      "author": "currentUser",
+      "moviesCount": 3,
+      "movies": [
+        "https://m.media-amazon.com/images/I/71niXI3lxlL._AC_UF894,1000_QL80_.jpg",
+        "https://i.pinimg.com/736x/7c/4a/23/7c4a23a434ef5ff58e9c51e29e4fe909.jpg",
+        "https://i.pinimg.com/1200x/4c/29/d6/4c29d6753e61511d6369567214af2f53.jpg"
+      ],
+      "isPrivate": false,
+      "createdBy": "currentUser",
+      "likes": 0,
+      "createdAt": "2025-11-12T12:07:28.191Z"
+    },
+    {
+      "id": "bc0a",
+      "title": "jai",
+      "author": "currentUser",
+      "moviesCount": 2,
+      "movies": [
+        "https://m.media-amazon.com/images/I/71niXI3lxlL._AC_UF894,1000_QL80_.jpg",
+        "https://i.pinimg.com/736x/7c/4a/23/7c4a23a434ef5ff58e9c51e29e4fe909.jpg"
+      ],
+      "isPrivate": false,
+      "createdBy": "currentUser",
+      "likes": 0,
+      "createdAt": "2025-11-12T12:40:11.276Z"
+    },
+    {
+      "id": "0e45",
+      "title": "Nicolle",
+      "author": "currentUser",
+      "moviesCount": 3,
+      "movies": [
+        "https://m.media-amazon.com/images/I/71niXI3lxlL._AC_UF894,1000_QL80_.jpg",
+        "https://i.pinimg.com/736x/7c/4a/23/7c4a23a434ef5ff58e9c51e29e4fe909.jpg",
+        "https://i.pinimg.com/1200x/4c/29/d6/4c29d6753e61511d6369567214af2f53.jpg"
+      ],
+      "isPrivate": false,
+      "createdBy": "currentUser",
+      "likes": 0,
+      "createdAt": "2025-11-12T13:59:09.029Z"
+    },
+    {
+      "id": "b627",
+      "title": "Nicole",
+      "author": "currentUser",
+      "moviesCount": 3,
+      "movies": [
+        "https://m.media-amazon.com/images/I/71niXI3lxlL._AC_UF894,1000_QL80_.jpg",
+        "https://i.pinimg.com/736x/7c/4a/23/7c4a23a434ef5ff58e9c51e29e4fe909.jpg",
+        "https://i.pinimg.com/1200x/4c/29/d6/4c29d6753e61511d6369567214af2f53.jpg"
+      ],
+      "isPrivate": true,
+      "createdBy": "currentUser",
+      "likes": 0,
+      "createdAt": "2025-11-14T13:32:56.292Z"
+    }
+  ],
+  "savedCollections": []
+}

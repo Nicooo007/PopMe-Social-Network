@@ -1,12 +1,76 @@
-import { useCollections } from "../context/CollectionsContext";
+import { useEffect, useState } from "react";
 import CollectionCard from "../components/CollectionCard";
+import { getCollections, likeCollection as likeCollectionAPI } from "../services/api";
 
 interface UserCollectionsProps {
   onBack: () => void;
 }
 
+interface Collection {
+  id: number;
+  title: string;
+  author: string;
+  description?: string;
+  likes: number;
+  moviesCount: number;
+  movies: string[];
+  isPrivate: boolean;
+  createdBy: string;
+}
+
 export default function UserCollections({ onBack }: UserCollectionsProps) {
-  const { userCollections, likeCollection, saveCollection, savedCollections } = useCollections();
+  const [userCollections, setUserCollections] = useState<Collection[]>([]);
+  const [loading, setLoading] = useState(true);
+  const currentUser = "currentUser"; // Simula el usuario actual
+
+  useEffect(() => {
+    loadUserCollections();
+  }, []);
+
+  const loadUserCollections = async () => {
+    try {
+      setLoading(true);
+      const data = await getCollections();
+      // Filtrar solo las colecciones del usuario actual
+      const filtered = data.filter((c: Collection) => c.createdBy === currentUser);
+      setUserCollections(filtered);
+    } catch (error) {
+      console.error("Error loading user collections:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLike = async (id: number) => {
+    const collection = userCollections.find(c => c.id === id);
+    if (!collection) return;
+
+    try {
+      await likeCollectionAPI(id, collection.likes);
+      setUserCollections(prev =>
+        prev.map(c => (c.id === id ? { ...c, likes: c.likes + 1 } : c))
+      );
+    } catch (error) {
+      console.error("Error liking collection:", error);
+    }
+  };
+
+  const handleImageChange = (id: number) => {
+    setUserCollections((prev) =>
+      prev.map((c) => {
+        if (c.id === id && c.movies.length > 0) {
+          const currentIndex = c.movies.indexOf(c.movies[0]);
+          const nextIndex = (currentIndex + 1) % c.movies.length;
+          const rotatedMovies = [
+            ...c.movies.slice(nextIndex),
+            ...c.movies.slice(0, nextIndex)
+          ];
+          return { ...c, movies: rotatedMovies };
+        }
+        return c;
+      })
+    );
+  };
 
   return (
     <div className="min-h-screen bg-[#1B1B1F] text-white px-6 py-8">
@@ -29,7 +93,12 @@ export default function UserCollections({ onBack }: UserCollectionsProps) {
           </p>
         </div>
 
-        {userCollections.length > 0 ? (
+        {loading ? (
+          <div className="text-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FFC267] mx-auto"></div>
+            <p className="text-gray-400 mt-4">Loading your collections...</p>
+          </div>
+        ) : userCollections.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {userCollections.map((collection) => (
               <div key={collection.id} className="relative">
@@ -41,17 +110,17 @@ export default function UserCollections({ onBack }: UserCollectionsProps) {
                 )}
                 <CollectionCard
                   collection={{
-                    id: Number(collection.id),
-                    title: collection.name,
-                    author: collection.createdBy,
-                    moviesCount: collection.movies.length,
+                    id: collection.id,
+                    title: collection.title,
+                    author: collection.author,
+                    moviesCount: collection.moviesCount,
                     likes: collection.likes,
-                    movies: collection.movies.map(m => m.poster)
+                    movies: collection.movies
                   }}
-                  onLike={() => likeCollection(collection.id)}
-                  onImageClick={() => {}}
-                  isSaved={savedCollections.includes(collection.id)}
-                  onSave={() => saveCollection(collection.id)}
+                  onLike={() => handleLike(collection.id)}
+                  onImageClick={() => handleImageChange(collection.id)}
+                  isSaved={false}
+                  onSave={() => {}}
                 />
               </div>
             ))}

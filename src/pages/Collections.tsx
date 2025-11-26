@@ -1,65 +1,48 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CollectionsTitle from "../components/CollectionsTitle";
 import CollectionCard from "../components/CollectionCard";
 import CreateCollection from "./CreateCollection";
-import UserCollections from "./UserCollections"; // 👈 importa tu vista de colecciones personales
+import UserCollections from "./UserCollections";
+import { getCollections, likeCollection as likeCollectionAPI } from "../services/api";
 
 interface CollectionsPageProps {
-  searchQuery: string; // 👈 recibe el search desde App
+  searchQuery: string;
 }
 
 export default function CollectionsPage({ searchQuery }: CollectionsPageProps) {
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [showUserCollections, setShowUserCollections] = useState(false); // 👈 nuevo estado
+  const [showUserCollections, setShowUserCollections] = useState(false);
+  const [collections, setCollections] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Mock data con películas reales
-  const [collections, setCollections] = useState([
-    {
-      id: 1,
-      title: "All time favorites",
-      author: "@Ann0",
-      description: "Classic movies that never get old",
-      likes: 80,
-      moviesCount: 3,
-      movies: [
-        "https://m.media-amazon.com/images/I/71niXI3lxlL._AC_UF894,1000_QL80_.jpg",
-        "https://i.pinimg.com/736x/7c/4a/23/7c4a23a434ef5ff58e9c51e29e4fe909.jpg",
-        "https://i.pinimg.com/1200x/4c/29/d6/4c29d6753e61511d6369567214af2f53.jpg"
-      ]
-    },
-    {
-      id: 2,
-      title: "Crying certified",
-      author: "@cruzee",
-      description: "Movies that will make you emotional",
-      likes: 582,
-      moviesCount: 4,
-      movies: [
-        "https://i.pinimg.com/736x/b7/95/44/b795447414c34b18eddc91fdea0fffef.jpg",
-        "https://i.pinimg.com/736x/7c/4a/23/7c4a23a434ef5ff58e9c51e29e4fe909.jpg",
-        "https://i.pinimg.com/1200x/3c/28/47/3c284737d4ee8eeb333d885f34f66917.jpg",
-        "https://m.media-amazon.com/images/I/71niXI3lxlL._AC_UF894,1000_QL80_.jpg"
-      ]
-    },
-    {
-      id: 3,
-      title: "Terror in the house",
-      author: "@cokl3",
-      description: "Spooky movies for a scary night",
-      likes: 65,
-      moviesCount: 3,
-      movies: [
-        "https://i.pinimg.com/736x/51/26/08/512608d675fd98fca4105f90ab7d6d5c.jpg",
-        "https://i.pinimg.com/736x/61/4e/f2/614ef2b62f2ba21bc75cf0fa7f0c56c5.jpg",
-        "https://i.pinimg.com/1200x/4c/29/d6/4c29d6753e61511d6369567214af2f53.jpg"
-      ]
+  useEffect(() => {
+    loadCollections();
+  }, []);
+
+  const loadCollections = async () => {
+    try {
+      setLoading(true);
+      const data = await getCollections();
+      setCollections(data);
+    } catch (error) {
+      console.error("Error loading collections:", error);
+    } finally {
+      setLoading(false);
     }
-  ]);
+  };
 
-  const handleLike = (id: number) => {
-    setCollections((prev) =>
-      prev.map((c) => (c.id === id ? { ...c, likes: c.likes + 1 } : c))
-    );
+  const handleLike = async (id: number) => {
+    const collection = collections.find(c => c.id === id);
+    if (!collection) return;
+
+    try {
+      await likeCollectionAPI(id, collection.likes);
+      setCollections(prev =>
+        prev.map(c => (c.id === id ? { ...c, likes: c.likes + 1 } : c))
+      );
+    } catch (error) {
+      console.error("Error liking collection:", error);
+    }
   };
 
   const handleImageChange = (id: number) => {
@@ -79,24 +62,28 @@ export default function CollectionsPage({ searchQuery }: CollectionsPageProps) {
     );
   };
 
-  // Filtra con el searchQuery que viene desde App
   const filteredCollections = collections.filter((c) =>
     c.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Si el usuario abre su vista de colecciones personales
   if (showUserCollections) {
     return <UserCollections onBack={() => setShowUserCollections(false)} />;
   }
 
   if (showCreateModal) {
-    return <CreateCollection onBack={() => setShowCreateModal(false)} />;
+    return (
+      <CreateCollection
+        onBack={() => {
+          setShowCreateModal(false);
+          loadCollections(); // Recargar después de crear
+        }}
+      />
+    );
   }
 
   return (
     <div className="min-h-screen bg-[#1B1B1F] text-white px-6 py-8">
       <div className="max-w-7xl mx-auto">
-        {/* Collections Title centrado - SIN buscador ya */}
         <div className="text-center mb-8">
           <CollectionsTitle />
           <p className="text-gray-400 mt-2">
@@ -104,7 +91,6 @@ export default function CollectionsPage({ searchQuery }: CollectionsPageProps) {
           </p>
         </div>
 
-        {/* Botones */}
         <div className="flex flex-col items-center gap-4 mb-12">
           <button
             onClick={() => setShowCreateModal(true)}
@@ -113,7 +99,6 @@ export default function CollectionsPage({ searchQuery }: CollectionsPageProps) {
             Create a collection
           </button>
 
-          {/* 💡 Botón “View your collections” */}
           <button
             onClick={() => setShowUserCollections(true)}
             className="px-8 py-3 bg-[#FFC267] text-[#1B1B1F] rounded-lg font-semibold hover:bg-opacity-90 transition"
@@ -122,19 +107,25 @@ export default function CollectionsPage({ searchQuery }: CollectionsPageProps) {
           </button>
         </div>
 
-        {/* Collections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredCollections.map((collection) => (
-            <CollectionCard
-              key={collection.id}
-              collection={collection}
-              onLike={() => handleLike(collection.id)}
-              onImageClick={() => handleImageChange(collection.id)}
-            />
-          ))}
-        </div>
+        {loading ? (
+          <div className="text-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FFC267] mx-auto"></div>
+            <p className="text-gray-400 mt-4">Loading collections...</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredCollections.map((collection) => (
+              <CollectionCard
+                key={collection.id}
+                collection={collection}
+                onLike={() => handleLike(collection.id)}
+                onImageClick={() => handleImageChange(collection.id)}
+              />
+            ))}
+          </div>
+        )}
 
-        {filteredCollections.length === 0 && (
+        {!loading && filteredCollections.length === 0 && (
           <div className="text-center py-16">
             <p className="text-gray-400 text-lg">No collections found 😢</p>
           </div>
@@ -142,4 +133,5 @@ export default function CollectionsPage({ searchQuery }: CollectionsPageProps) {
       </div>
     </div>
   );
+  
 }
