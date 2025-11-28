@@ -1,0 +1,17 @@
+name: popme-app
+
+services:
+  web:
+    container_name: popme-frontend
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_SUPABASE_URL: ${VITE_SUPABASE_URL}
+        VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY}
+    image: ghcr.io/nicooo007/popme-app:latest
+    environment:
+      - PORT=10000
+    ports:
+      - "4173:10000"
+    restart: unless-stopped

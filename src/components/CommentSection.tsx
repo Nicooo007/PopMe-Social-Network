@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getComments, addComment } from '../services/api';
+import { deleteComment } from '../services/api';
 
 interface Comment {
   id: number;
@@ -12,9 +13,10 @@ interface Comment {
 interface CommentSectionProps {
   postId: number;
   onCommentAdded?: () => void;
+  onCommentDeleted?: () => void;
 }
 
-export default function CommentSection({ postId, onCommentAdded }: CommentSectionProps) {
+export default function CommentSection({ postId, onCommentAdded, onCommentDeleted }: CommentSectionProps) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -35,23 +37,31 @@ export default function CommentSection({ postId, onCommentAdded }: CommentSectio
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newComment.trim()) return;
-
     setIsLoading(true);
     try {
-      await addComment({
-        postId,
-        userName: 'Current User',
-        userHandle: '@currentuser',
-        text: newComment
-      });
-      setNewComment('');
+      await addComment({ postId, userName: "...", userHandle: "...", text: newComment });
+      setNewComment("");
       await loadComments();
-      onCommentAdded?.();
-    } catch (error) {
-      console.error('Error adding comment:', error);
-      alert('Could not add comment. Make sure the API server is running (npm run dev:all)');
+      onCommentAdded?.();              // <- importante
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleDelete = async (commentId: number) => {
+    if (!confirm("Delete this comment?")) return;
+
+    try {
+      // Optimistic UI: borra localmente primero
+      setComments((prev) => prev.filter((c) => c.id !== commentId));
+
+      await deleteComment(commentId);
+
+      onCommentDeleted?.();  // avisar al Post
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+      // si quieres, recarga:
+      await loadComments();
     }
   };
 
@@ -78,18 +88,34 @@ export default function CommentSection({ postId, onCommentAdded }: CommentSectio
       </form>
 
       {comments.length > 0 && (
-        <div className="space-y-3 max-h-60 overflow-y-auto">
+        <div className="mt-4 space-y-3">
           {comments.map((comment) => (
-            <div key={comment.id} className="flex gap-3 p-3 bg-[#1B1B1F] rounded-lg">
-              <div className="w-8 h-8 rounded-full bg-[#AA0235] flex items-center justify-center flex-shrink-0">
-                <span className="text-sm font-bold">{comment.userName.charAt(0)}</span>
+            <div
+              key={comment.id}
+              className="flex items-start gap-3 bg-[#1B1B1F] px-4 py-3 rounded-2xl"
+            >
+              <div className="w-8 h-8 rounded-full bg-[#AA0235] flex items-center justify-center text-sm font-bold">
+                {comment.userName.charAt(0)}
               </div>
               <div className="flex-1">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="font-semibold text-sm">{comment.userName}</span>
-                  <span className="text-xs text-gray-400">{comment.userHandle}</span>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <span className="font-semibold text-sm text-white">
+                      {comment.userName}
+                    </span>
+                    <span className="ml-2 text-xs text-gray-500">
+                      {comment.userHandle}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(comment.id)}
+                    className="text-gray-500 hover:text-red-500 text-xs"
+                  >
+                    Delete
+                  </button>
                 </div>
-                <p className="text-sm text-gray-300">{comment.text}</p>
+                <p className="text-sm text-gray-200 mt-1">{comment.text}</p>
               </div>
             </div>
           ))}

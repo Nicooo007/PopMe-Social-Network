@@ -1,3 +1,4 @@
+// src/pages/HomePage.tsx
 import { useEffect, useState } from "react";
 import SearchBar from "../components/SearchBar";
 import Post from "../components/Post";
@@ -5,6 +6,7 @@ import { getPosts } from "../services/api";
 
 interface PostData {
   id: number;
+  userId: string;        // <- NUEVO, viene de la API
   userName: string;
   userHandle: string;
   userImage: string;
@@ -29,19 +31,20 @@ export default function HomePage() {
   const loadPosts = async () => {
     try {
       setLoading(true);
-      const data = await getPosts();
-      setPosts(data);
-      setFilteredPosts(data);
+      const data = await getPosts();      // debe devolver { id, userId, ... }
+      setPosts(data as PostData[]);
+      setFilteredPosts(data as PostData[]);
     } catch (err) {
       console.error("Error al cargar posts desde API:", err);
       // Fallback al JSON local si falla la API
-      fetch("/data/postData.json")
+      fetch("public/data/postData.json")
         .then((res) => res.json())
         .then((data) => {
           const postsWithLikes = data.map((post: any) => ({
             ...post,
+            userId: post.userId || "", // evita undefined
             likes: post.likes || Math.floor(Math.random() * 200),
-            comments: post.comments || []
+            comments: post.comments || [],
           }));
           setPosts(postsWithLikes);
           setFilteredPosts(postsWithLikes);
@@ -63,7 +66,7 @@ export default function HomePage() {
   return (
     <div className="space-y-6">
       <SearchBar onSearch={handleSearch} />
-      
+
       {loading ? (
         <div className="text-center py-12">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FFC267] mx-auto"></div>
@@ -76,14 +79,15 @@ export default function HomePage() {
             id={post.id}
             username={post.userName}
             handle={post.userHandle}
+            userImage={post.userImage}
             movieTitle={post.movieTitle}
             year={post.year}
             review={post.reviewText}
             rating={post.rating}
             poster={post.movieImage}
-            popcornUrl="https://cdn-icons-png.flaticon.com/512/4221/4221419.png"
             initialLikes={post.likes}
             initialComments={post.comments?.length || 0}
+            authorId={post.userId}        // <- AQUÍ va userId
           />
         ))
       ) : (

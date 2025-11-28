@@ -1,0 +1,3 @@
+.input-field {
+  @apply w-full rounded-full bg-transparent border border-white/10 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#ffd08b]/30;
+}

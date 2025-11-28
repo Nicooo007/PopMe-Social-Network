@@ -1,21 +1,34 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./sidebar.css";
 import logo from "../../assets/Popme.png";
+import supabase from "../../supabaseClient";
 
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
+  onSelectMenu?: (menu: string) => void;
 }
 
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const menuItems = [
-    { path: "/", label: "Home", icon: "bx-home" },
+    { path: "/home", label: "Home", icon: "bx-home" },
     { path: "/movies", label: "Movies", icon: "bx-movie" },
     { path: "/collections", label: "Collections", icon: "bx-heart" },
     { path: "/profile", label: "Profile", icon: "bx-user" },
   ];
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Error signing out:", error.message);
+      return;
+    }
+    onClose();
+    navigate("/"); // ruta donde tienes LoginPage
+  };
 
   return (
     <>
@@ -32,7 +45,11 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         ></div>
       )}
 
-      <aside className={`sidebar ${isOpen ? "open" : "closed"}`}>
+      <aside
+        className={`sidebar ${isOpen ? "open" : "closed"}`}
+        style={{ zIndex: 50 }}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="logo-section">
           <img src={logo} alt="PopMe logo" className="logo" />
         </div>
@@ -51,7 +68,14 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                 <Link
                   to={item.path}
                   onClick={onClose}
-                  style={{ textDecoration: "none", color: "inherit", display: "flex", alignItems: "center", gap: "1rem", width: "100%" }}
+                  style={{
+                    textDecoration: "none",
+                    color: "inherit",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "1rem",
+                    width: "100%",
+                  }}
                 >
                   <i className={`bx ${item.icon}`}></i>
                   <span>{item.label}</span>
@@ -61,7 +85,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
           </ul>
         </nav>
 
-        <button className="logout">
+        <button className="logout" onClick={handleLogout}>
           <i className="bx bx-log-out"></i>
           <span>Log Out</span>
         </button>

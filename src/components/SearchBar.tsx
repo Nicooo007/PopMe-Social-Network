@@ -6,9 +6,9 @@ interface SearchBarProps {
   placeholder?: string;
 }
 
-export default function SearchBar({ 
-  onSearch, 
-  placeholder = "Search posts..." 
+export default function SearchBar({
+  onSearch,
+  placeholder = "Search posts..."
 }: SearchBarProps) {
   const [query, setQuery] = useState("");
   const timeoutRef = useRef<number | null>(null);  // 👈 Cambiado aquí
@@ -55,7 +55,7 @@ export default function SearchBar({
         className="w-full px-4 py-3 pl-10 bg-[#1B1B1F] text-white border border-gray-700 rounded-full focus:outline-none focus:border-[#FFC267] transition"
       />
       <i className="bx bx-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl"></i>
-      
+
       {query && (
         <button
           onClick={handleClear}

@@ -1,86 +1,104 @@
-[
-  {
-    "id": 1,
-    "userName": "Layla Harris",
-    "userHandle": "@lyHarris",
-    "userImage": "https://i.pravatar.cc/100?img=47",
-    "movieTitle": "Superman",
-    "year": 2025,
-    "rating": 5,
-    "reviewTitle": "The coolest superhero is back, and I'm in for it.",
-    "reviewText": "Finally superheroes movies about superheroes, not antiheroes. Very comic accurate!",
-    "likes": 94,
-    "comments": 3,
-    "movieImage": "https://i.pinimg.com/736x/61/4e/f2/614ef2b62f2ba21bc75cf0fa7f0c56c5.jpg"
-  },
-  {
-    "id": 2,
-    "userName": "Carson Ross",
-    "userHandle": "@carlofy",
-    "userImage": "https://i.pravatar.cc/100?img=32",
-    "movieTitle": "The Batman",
-    "year": 2022,
-    "rating": 4,
-    "reviewTitle": "Pattinson is a good Batman.",
-    "reviewText": "It’s a darker, more realistic approach to Gotham and it works surprisingly well.",
-    "likes": 120,
-    "comments": 7,
-    "movieImage": "https://i.pinimg.com/736x/51/26/08/512608d675fd98fca4105f90ab7d6d5c.jpg"
-  },
-  {
-    "id": 3,
-    "userName": "Maya Thompson",
-    "userHandle": "@mayat",
-    "userImage": "https://i.pravatar.cc/100?img=12",
-    "movieTitle": "La La Land",
-    "year": 2016,
-    "rating": 5,
-    "reviewTitle": "Pure cinematic magic.",
-    "reviewText": "The music, colors, and emotion blend perfectly. One of my all-time favorites.",
-    "likes": 210,
-    "comments": 18,
-    "movieImage": "https://i.pinimg.com/736x/7c/4a/23/7c4a23a434ef5ff58e9c51e29e4fe909.jpg"
-  },
-  {
-    "id": 4,
-    "userName": "Ethan Brooks",
-    "userHandle": "@ethanb",
-    "userImage": "https://i.pravatar.cc/100?img=4",
-    "movieTitle": "Interstellar",
-    "year": 2014,
-    "rating": 5,
-    "reviewTitle": "A masterpiece of science and emotion.",
-    "reviewText": "Every time I watch it, I find new details. Nolan never disappoints.",
-    "likes": 350,
-    "comments": 25,
-    "movieImage": "https://i.pinimg.com/1200x/4c/29/d6/4c29d6753e61511d6369567214af2f53.jpg"
-  },
-  {
-    "id": 5,
-    "userName": "Sophie Clark",
-    "userHandle": "@sophieclark",
-    "userImage": "https://i.pravatar.cc/100?img=56",
-    "movieTitle": "Inception",
-    "year": 2010,
-    "rating": 4,
-    "reviewTitle": "Still as mind-blowing as the first time.",
-    "reviewText": "That ending will always make me think twice. One of Nolan’s best works.",
-    "likes": 275,
-    "comments": 15,
-    "movieImage": "https://i.pinimg.com/1200x/3c/28/47/3c284737d4ee8eeb333d885f34f66917.jpg"
-  },
-  {
-    "id": 6,
-    "userName": "Lucas Brown",
-    "userHandle": "@lucasb",
-    "userImage": "https://i.pravatar.cc/100?img=19",
-    "movieTitle": "Dune: Part Two",
-    "year": 2024,
-    "rating": 5,
-    "reviewTitle": "Epic and grand in every sense.",
-    "reviewText": "Visually stunning and faithful to the book. Denis Villeneuve is unstoppable.",
-    "likes": 189,
-    "comments": 9,
-    "movieImage": "https://i.pinimg.com/736x/b7/95/44/b795447414c34b18eddc91fdea0fffef.jpg"
-  }
-]
+{
+  "posts": [
+    {
+      "id": "1",
+      "userName": "Layla Harris",
+      "userHandle": "@lyHarris",
+      "userImage": "https://i.pravatar.cc/100?img=47",
+      "movieTitle": "Superman",
+      "year": 2025,
+      "rating": 5,
+      "reviewTitle": "The coolest superhero is back, and I'm in for it.",
+      "reviewText": "Finally superheroes movies about superheroes, not antiheroes. Very comic accurate!",
+      "likes": 94,
+      "comments": 3,
+      "movieImage": "https://i.pinimg.com/736x/61/4e/f2/614ef2b62f2ba21bc75cf0fa7f0c56c5.jpg"
+    },
+    {
+      "id": "2",
+      "userName": "Carson Ross",
+      "userHandle": "@carlofy",
+      "userImage": "https://i.pravatar.cc/100?img=32",
+      "movieTitle": "The Batman",
+      "year": 2022,
+      "rating": 4,
+      "reviewTitle": "Pattinson is a good Batman.",
+      "reviewText": "It’s a darker, more realistic approach to Gotham and it works surprisingly well.",
+      "likes": 120,
+      "comments": 7,
+      "movieImage": "https://i.pinimg.com/736x/51/26/08/512608d675fd98fca4105f90ab7d6d5c.jpg"
+    },
+    {
+      "id": "3",
+      "userName": "Maya Thompson",
+      "userHandle": "@mayat",
+      "userImage": "https://i.pravatar.cc/100?img=12",
+      "movieTitle": "La La Land",
+      "year": 2016,
+      "rating": 5,
+      "reviewTitle": "Pure cinematic magic.",
+      "reviewText": "The music, colors, and emotion blend perfectly. One of my all-time favorites.",
+      "likes": 210,
+      "comments": 18,
+      "movieImage": "https://i.pinimg.com/736x/7c/4a/23/7c4a23a434ef5ff58e9c51e29e4fe909.jpg"
+    },
+    {
+      "id": "4",
+      "userName": "Ethan Brooks",
+      "userHandle": "@ethanb",
+      "userImage": "https://i.pravatar.cc/100?img=4",
+      "movieTitle": "Interstellar",
+      "year": 2014,
+      "rating": 5,
+      "reviewTitle": "A masterpiece of science and emotion.",
+      "reviewText": "Every time I watch it, I find new details. Nolan never disappoints.",
+      "likes": 350,
+      "comments": 25,
+      "movieImage": "https://i.pinimg.com/1200x/4c/29/d6/4c29d6753e61511d6369567214af2f53.jpg"
+    },
+    {
+      "id": "5",
+      "userName": "Sophie Clark",
+      "userHandle": "@sophieclark",
+      "userImage": "https://i.pravatar.cc/100?img=56",
+      "movieTitle": "Inception",
+      "year": 2010,
+      "rating": 4,
+      "reviewTitle": "Still as mind-blowing as the first time.",
+      "reviewText": "That ending will always make me think twice. One of Nolan’s best works.",
+      "likes": 275,
+      "comments": 15,
+      "movieImage": "https://i.pinimg.com/1200x/3c/28/47/3c284737d4ee8eeb333d885f34f66917.jpg"
+    },
+    {
+      "id": "6",
+      "userName": "Lucas Brown",
+      "userHandle": "@lucasb",
+      "userImage": "https://i.pravatar.cc/100?img=19",
+      "movieTitle": "Dune: Part Two",
+      "year": 2024,
+      "rating": 5,
+      "reviewTitle": "Epic and grand in every sense.",
+      "reviewText": "Visually stunning and faithful to the book. Denis Villeneuve is unstoppable.",
+      "likes": 189,
+      "comments": 9,
+      "movieImage": "https://i.pinimg.com/736x/b7/95/44/b795447414c34b18eddc91fdea0fffef.jpg"
+    }
+  ],
+  "collections": [
+    {
+      "id": "1",
+      "title": "Top Superhero Movies",
+      "author": "Layla Harris",
+      "movies": [
+        "Superman",
+        "The Batman"
+      ],
+      "moviesCount": 2,
+      "isPrivate": false,
+      "createdBy": "Layla Harris",
+      "likes": 18
+    }
+  ],
+  "savedCollections": []
+}

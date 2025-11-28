@@ -1,113 +1,53 @@
-/* basic sidebar layout */
+/* ================================
+   OVERLAY
+===================================*/
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+  z-index: 30;
+}
+
+.sidebar-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+/* ================================
+   SIDEBAR BASE
+===================================*/
 .sidebar {
-  background-color: #7c0a27;
-  color: white;
-  width: 220px;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 1.5rem;
   position: fixed;
   top: 0;
   left: 0;
-  transition: transform 0.3s ease;
+  width: 260px; /* valor modernizado */
+  height: 100vh;
+  background-color: #7c0a27; /* tu color original */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  transition: transform .35s cubic-bezier(.4,0,.2,1);
   z-index: 50;
 }
 
-/* when the sidebar is collapsed/hidden */
+/* estados */
 .sidebar.closed {
   transform: translateX(-100%);
 }
 
-/* when the sidebar is open */
 .sidebar.open {
   transform: translateX(0);
 }
 
-/* small button to open/close sidebar */
-.menu-toggle {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 2rem;
-  cursor: pointer;
-  align-self: flex-end;
-  transition: color 0.2s;
-  padding: 0.5rem;
-}
 
-.menu-toggle:hover {
-  color: #FFC267;
-}
-
-/* navigation section */
-.nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-/* each navigation item */
-.nav li {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin: 1.2rem 0;
-  cursor: pointer;
-  padding: 0.75rem;
-  border-radius: 0.5rem;
-  transition: background-color 0.2s, color 0.2s;
-  font-size: 1rem;
-}
-
-.nav li i {
-  font-size: 1.5rem;
-}
-
-/* subtle hover effect */
-.nav li:hover {
-  background-color: #6B0821;
-  color: #FFC267;
-}
-
-/* active menu item */
-.nav li.active {
-  background-color: #6B0821;
-  color: #FFC267;
-  font-weight: 500;
-}
-
-/* logout button at the bottom */
-.logout {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  padding: 0.75rem;
-  border-radius: 0.5rem;
-  transition: background-color 0.2s, color 0.2s;
-  width: 100%;
-  font-size: 1rem;
-}
-
-.logout i {
-  font-size: 1.5rem;
-}
-
-.logout:hover {
-  background-color: #6B0821;
-  color: #FFC267;
-}
-
-/* hide text when sidebar is collapsed */
-.sidebar.closed span {
-  display: none;
-}
-
+/* ================================
+   LOGO
+===================================*/
 .logo-section {
   display: flex;
   justify-content: center;
@@ -119,9 +59,111 @@
 .logo {
   width: 120px;
   height: auto;
-  transition: width 0.3s;
+  transition: width 0.3s ease;
 }
 
 .sidebar.closed .logo {
   width: 40px;
+}
+
+
+/* ================================
+   MENU TOGGLE BUTTON
+===================================*/
+.menu-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  align-self: flex-end;
+  padding: 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.menu-toggle:hover {
+  color: #FFC267;
+}
+
+
+/* ================================
+   NAVIGATION
+===================================*/
+.nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* item estilo general */
+.nav-item,
+.nav li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .9rem 1rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #e0e0e0;
+  transition: background .25s ease, color .25s ease, transform .2s ease;
+}
+
+/* Ícono */
+.nav-item i,
+.nav li i {
+  font-size: 1.5rem;
+}
+
+/* Hover moderno */
+.nav-item:hover,
+.nav li:hover {
+  background: #6B0821; /* tono más oscuro del original */
+  color: #FFC267;
+  transform: translateX(4px);
+}
+
+/* Active */
+.nav-item.active,
+.nav li.active {
+  background: #6B0821;
+  color: #FFC267;
+  font-weight: 500;
+}
+
+
+/* ================================
+   HIDE TEXT WHEN COLLAPSED
+===================================*/
+.sidebar.closed span {
+  display: none;
+}
+
+
+/* ================================
+   LOGOUT BUTTON
+===================================*/
+.logout {
+  margin-top: auto;
+  display: flex;
+  gap: .8rem;
+  align-items: center;
+  background: #d32f2f;
+  color: white;
+  border: none;
+  padding: .8rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background .25s ease, color .25s ease;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.logout i {
+  font-size: 1.5rem;
+}
+
+.logout:hover {
+  background: #b71c1c;
 }
